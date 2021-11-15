@@ -1,6 +1,8 @@
-export default function fetchCountryByName(searchName) {
-    return fetch(`https://restcountries.com/v3.1/name/${searchName}`).then(
-        response => {
+const BASE_URL = 'https://restcountries.com/v3.1'
+
+function fetchCountryByName(searchName) {
+    return fetch(`${BASE_URL}/name/${searchName}`)
+        .then((response) => {
             if (!response.ok) {
                 Notiflix.Notify.failure("Oops, there is no country with that name");
                 refs.cardInfo.innerHTML = '';
@@ -10,3 +12,5 @@ export default function fetchCountryByName(searchName) {
             return response.json();
         })
 }
+
+export default { fetchCountryByName }
