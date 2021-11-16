@@ -1,4 +1,7 @@
-const BASE_URL = 'https://restcountries.com/v3.1'
+import Notiflix from 'notiflix';
+import getRefs from './get-refs';
+const BASE_URL = 'https://restcountries.com/v3.1';
+const refs = getRefs()
 
 function fetchCountryByName(searchName) {
     return fetch(`${BASE_URL}/name/${searchName}`)

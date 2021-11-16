@@ -3,29 +3,25 @@ import Notiflix from 'notiflix';
 import API from './js/fetchCounties'
 import getRefs from './js/get-refs';
 import countryInfo from './templates/country-info.hbs';
-import countryList from './templates/country-list.hbs'
+import countryList from './templates/country-list.hbs';
+import { debounce } from 'lodash';
 
-// не сделан trim() и debounce , и почему то не работает ролверка (!response.ok)
 const DEBOUNCE_DELAY = 300;
 const refs = getRefs()
 
-refs.searchForm.addEventListener('input', onSearch);
+refs.searchForm.addEventListener('input', debounce(onSearch,DEBOUNCE_DELAY));
 
 function onSearch(e) {
     e.preventDefault();
     
-    const inputCountry = e.currentTarget.value
+  const inputCountry = e.path[0].value.trim()
+  console.log(inputCountry);
 
     API.fetchCountryByName(inputCountry)
     .then(renderCountryCard)
     .catch(error => console.log(error));
     
-    if (inputCountry === '') {
-        refs.cardInfo.innerHTML = ''
-        refs.cardList.innerHTML = ''
-    }
 };
-
 
 
 function renderCountryCard(country) {
@@ -50,3 +46,5 @@ function renderCountryCard(country) {
     };
     
     }
+
+    
